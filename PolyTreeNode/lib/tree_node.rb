@@ -1,4 +1,10 @@
+
+require "byebug"
+require_relative "Searchable.rb"
+
 class PolyTreeNode
+
+include Searchable 
 
     attr_reader :value, :children, :parent
     
@@ -10,7 +16,8 @@ class PolyTreeNode
     end
 
     def parent=(node)
-        if node != nil && node.parent != nil
+        # debugger
+        if node != nil && self.parent != nil
             self.parent.children.each_with_index do |child, i|
                 if child.value == self.value
                     self.parent.children.delete_at(i)
@@ -38,6 +45,6 @@ class PolyTreeNode
         end
     end
 
-    
 
 end
+
