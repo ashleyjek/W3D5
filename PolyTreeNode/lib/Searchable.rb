@@ -18,4 +18,21 @@ module Searchable
         end
         return nil 
     end
+
+    def bfs(target_value)
+        queue = []
+        queue.push(self)
+        while !queue.empty?
+            checker = queue.shift 
+            if checker.value == target_value
+                return checker
+            else 
+                checker.children.each do |child| 
+                    queue << child
+                end
+            end
+        end
+        return nil
+
+    end
 end
