@@ -10,10 +10,10 @@ class PolyTreeNode
     end
 
     def parent=(node)
-        if @parent != nil
-            @parent.children.each_with_index do |child, i|
-                if child == node
-                    @parent.children.delete_at(i)
+        if node != nil && node.parent != nil
+            self.parent.children.each_with_index do |child, i|
+                if child.value == self.value
+                    self.parent.children.delete_at(i)
                 end
             end
         end
@@ -26,5 +26,18 @@ class PolyTreeNode
         end
     end
 
+    def add_child(node)
+        node.parent=(self)
+    end
+
+    def remove_child(node)
+        if node.parent == nil 
+            raise "error"
+        else 
+            node.parent=(nil)
+        end
+    end
+
+    
 
 end
