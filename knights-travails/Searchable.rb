@@ -23,7 +23,7 @@ module Searchable
         queue = []
         queue.push(self)
         while !queue.empty?
-            debugger
+            # debugger
             checker = queue.shift 
             if checker.value == target_value
                 return checker

@@ -44,6 +44,7 @@ include Searchable
         queue = []
 
         knight = PolyTreeNode.new(self.starting_position)
+        fin = knight
         queue << knight
       
         while !queue.empty?
@@ -56,19 +57,25 @@ include Searchable
                 root.add_child(create_child)
                 queue << create_child
             end
-            
+            # debugger
         end
-        knight
+        fin
     end
 
     def find_path(end_pos)
-
-        knight = 
-        knight.build_move_tree
-        knight.bfs(end_pos)
-
+        knight = self.build_move_tree
+        trace_path_back(knight.bfs(end_pos))
     end
     
+    def trace_path_back(knight)
+        path = [knight.value]
+        current = knight
+        until current.parent == nil
+            path << current.parent.value
+            current = current.parent
+        end
+        path.reverse
+    end
 
 
 
@@ -77,5 +84,5 @@ end
 kpf = KnightPathFinder.new([0,0])
 # p KnightPathFinder.valid_moves(kpf.starting_position)
 # p kpf.build_move_tree
-p kpf.find_path([2,1])
-# p kpf.considered_positions
+p kpf.find_path([6,2])
+# endpoint.trace_path_back
