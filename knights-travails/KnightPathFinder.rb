@@ -5,15 +5,14 @@ class KnightPathFinder
 
 include Searchable
     
-    def self.root_node
-        @starting_position = [0,0]
-    end
+
 
     POSSIBLE_FIN = [[1,2],[2,1],[2,-1],[1,-2],[-2,-1],[-1,-2],[1,-2],[2,-1]]
-    attr_reader :starting_position, :considered_positions
+    attr_reader :starting_position, :considered_positions, :root_node
 
     def initialize(starting_pos = [0,0])
         @starting_position = starting_pos
+        
         # self.build_move_tree
         @considered_positions = [starting_pos]
     end
@@ -43,9 +42,8 @@ include Searchable
     def build_move_tree
         queue = []
 
-        knight = PolyTreeNode.new(self.starting_position)
-        fin = knight
-        queue << knight
+        @root_node = PolyTreeNode.new(self.starting_position)
+        queue << @root_node
       
         while !queue.empty?
             root = queue.shift
@@ -59,17 +57,18 @@ include Searchable
             end
             # debugger
         end
-        fin
+        @root_node
     end
 
     def find_path(end_pos)
         knight = self.build_move_tree
-        trace_path_back(knight.bfs(end_pos))
-    end
+        fin_node = knight.bfs(end_pos)
+        trace_path_back(fin_node)
+        end
     
-    def trace_path_back(knight)
-        path = [knight.value]
-        current = knight
+    def trace_path_back(fin_node)
+        path = [fin_node.value]
+        current = fin_node
         until current.parent == nil
             path << current.parent.value
             current = current.parent
