@@ -31,9 +31,9 @@ class KnightPathFinder
     def new_moves_positions(pos)
         poss_moves = KnightPathFinder.valid_moves(pos)
         poss_moves = poss_moves.select {|pot_move| !@considered_positions.include?(pot_move)}
+        poss_moves.uniq! if poss_moves != nil
         @considered_positions += poss_moves
-        p considered_positions
-        puts considered_positions.length
+        
         poss_moves
     end
 
@@ -45,9 +45,9 @@ class KnightPathFinder
       
         while !queue.empty?
             root = queue.shift
-            # knight = PolyTreeNode.new(root.starting_position) if first
-            # knight = PolyTreeNode.new(root.value) unless first
+          
             children = self.new_moves_positions(root.value)
+            
             children.each do |child|
                 create_child = PolyTreeNode.new(child)
                 root.add_child(create_child)
@@ -55,7 +55,7 @@ class KnightPathFinder
             end
             
         end
-        knight
+        @considered_positions
     end
     
 
@@ -64,6 +64,6 @@ class KnightPathFinder
 end
 
 kpf = KnightPathFinder.new([0,0])
-p KnightPathFinder.valid_moves(kpf.starting_position)
+# p KnightPathFinder.valid_moves(kpf.starting_position)
 p kpf.build_move_tree
-p kpf.considered_positions
+# p kpf.considered_positions
