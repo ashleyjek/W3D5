@@ -1,6 +1,9 @@
 require_relative "tree_node.rb"
+require_relative "Searchable"
 
 class KnightPathFinder
+
+include Searchable
     
     def self.root_node
         @starting_position = [0,0]
@@ -55,7 +58,15 @@ class KnightPathFinder
             end
             
         end
-        @considered_positions
+        knight
+    end
+
+    def find_path(end_pos)
+
+        knight = 
+        knight.build_move_tree
+        knight.bfs(end_pos)
+
     end
     
 
@@ -65,5 +76,6 @@ end
 
 kpf = KnightPathFinder.new([0,0])
 # p KnightPathFinder.valid_moves(kpf.starting_position)
-p kpf.build_move_tree
+# p kpf.build_move_tree
+p kpf.find_path([2,1])
 # p kpf.considered_positions
