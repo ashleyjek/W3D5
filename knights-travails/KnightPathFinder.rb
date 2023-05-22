@@ -36,11 +36,18 @@ class KnightPathFinder
     end
 
     def build_move_tree
+        queue = []
+
         knight = PolyTreeNode.new(self.starting_position)
-        children = self.new_moves_positions(self.starting_position)
-        children.each do |child|
-            test = PolyTreeNode.new(child)
-            knight.add_child(test)
+        queue << self
+        while !queue.empty?
+            root = queue.shift
+            children = root.new_moves_positions(root.starting_position)
+            children.each do |child|
+                create_child = PolyTreeNode.new(child)
+                knight.add_child(create_child)
+                queue << create_child
+            end
         end
         knight
     end
@@ -53,3 +60,4 @@ end
 kpf = KnightPathFinder.new([0,0])
 p KnightPathFinder.valid_moves(kpf.starting_position)
 p kpf.build_move_tree
+p kpf.considered_positions
